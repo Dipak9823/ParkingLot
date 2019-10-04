@@ -36,7 +36,7 @@ public class ParkingLot {
 
         vehicles.add(vehicle);
         if (isFull(size) && owner != null) {
-            owner.inform();
+            owner.informIsFull();
         }
     }
 
@@ -52,6 +52,9 @@ public class ParkingLot {
             throw new CarNotFoundException("VEHICLE NO LONGER AVAILABLE IN PARKING LOT");
         }
         vehicles.remove(vehicle);
+        if (owner != null) {
+            owner.informSpaceAvailable();
+        }
         return vehicle;
     }
 

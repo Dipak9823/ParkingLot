@@ -1,9 +1,14 @@
 package com.parkinglot;
 
 public class Owner {
-    private boolean wasCalled =false;
+    private boolean isParkingLotFull =false;
+    private boolean isAvailable=false;
 
-    public void inform(){
-        this.wasCalled=true;
+    public void informIsFull(){
+        this.isParkingLotFull =true;
+    }
+
+    public void informSpaceAvailable() {
+        this.isAvailable =true;
     }
 }

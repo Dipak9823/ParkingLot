@@ -8,13 +8,19 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DummyOwner extends Owner {
-    public boolean wasCalled = false;
+    public boolean isParkingLotFull = false;
+    public boolean isAvailable = false;
     public int noOfTimes = 0;
 
     @Override
-    public void inform() {
-        // super.inform();
-        this.wasCalled = true;
+    public void informIsFull() {
+        this.isParkingLotFull = true;
+        noOfTimes++;
+    }
+
+    @Override
+    public void informSpaceAvailable() {
+        this.isAvailable = true;
         noOfTimes++;
     }
 }
@@ -115,16 +121,30 @@ public class ParkingLotTest {
         Object vehicleOne = new Object();
         parkingLot.park(vehicleOne);
 
-        assertTrue(owner.wasCalled);
+        assertTrue(owner.isParkingLotFull);
     }
 
     @Test
-    void givenParkingLotWithCapacityOne_WhenCheckHowManyTimesCall_ThenShouldReturnsNoOfTimesMethodCall() throws VehicleAlreadyPark, CapacityFullException {
+    void givenParkingLotWithCapacityOne_WhenCheckHowManyTimesCall_ThenShouldReturnsOne() throws VehicleAlreadyPark, CapacityFullException {
         DummyOwner owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(1, owner);
         Object vehicleOne = new Object();
         parkingLot.park(vehicleOne);
 
-        assertEquals(owner.noOfTimes,1);
+        assertEquals(owner.noOfTimes, 1);
+    }
+
+    @Test
+    void givenFullParkingLot_WhenUnPark_ThenNotifyToOwner() throws VehicleAlreadyPark, CapacityFullException, CarNotFoundException {
+        DummyOwner owner = new DummyOwner();
+        ParkingLot parkingLot = new ParkingLot(2, owner);
+        Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+
+        parkingLot.unPark(vehicleTwo);
+
+        assertTrue(owner.isAvailable);
     }
 }
