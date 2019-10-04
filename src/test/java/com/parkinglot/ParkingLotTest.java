@@ -8,7 +8,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+class DummyOwner extends Owner {
+    public boolean wasCalled=false;
 
+    @Override
+    public void inform() {
+       // super.inform();
+        this.wasCalled=true;
+    }
+}
 
 public class ParkingLotTest {
 
@@ -82,7 +90,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLotWithCapacityTwo_whenUnParkThreeVehicle_thenShouldThrowException() throws VehicleAlreadyPark, CapacityFullException, CarNotFoundException {
+    void givenParkingLotWithCapacityTwo_whenUnParkVehicle_thenShouldThrowException() throws VehicleAlreadyPark, CapacityFullException, CarNotFoundException {
         ParkingLot parkingLot = new ParkingLot(2);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -97,6 +105,16 @@ public class ParkingLotTest {
             parkingLot.unPark(vehicleTwo);
         });
         assertEquals("VEHICLE NO LONGER AVAILABLE IN PARKING LOT", thrown.getMessage());
+    }
+
+    @Test
+    void givenParkingLotWithCapacityOne_WhenIsFull_ThenNotifyToOwner() throws VehicleAlreadyPark, CapacityFullException {
+        DummyOwner owner=new DummyOwner();
+        ParkingLot parkingLot = new ParkingLot(1,owner);
+        Object vehicleOne = new Object();
+        parkingLot.park(vehicleOne);
+
+        assertTrue(owner.wasCalled);
     }
 
 
