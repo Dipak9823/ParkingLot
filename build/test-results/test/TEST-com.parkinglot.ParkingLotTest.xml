@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.parkinglot.ParkingLotTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2019-10-04T03:36:12" hostname="SUNILs-MacBook-Pro.local" time="0.019">
+<testsuite name="com.parkinglot.ParkingLotTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2019-10-04T10:31:53" hostname="Dipaks-MacBook-Pro.local" time="0.015">
   <properties/>
-  <testcase name="givenParkingLotWithCapacityOne_whenUnParkVehicle_thenShouldReturnVehicle()" classname="com.parkinglot.ParkingLotTest" time="0.01"/>
+  <testcase name="givenParkingLotWithCapacityOne_whenUnParkVehicle_thenShouldReturnVehicle()" classname="com.parkinglot.ParkingLotTest" time="0.007"/>
   <testcase name="givenParkingLot_whenIsAvailable_ThenShouldBeAvailable()" classname="com.parkinglot.ParkingLotTest" time="0.001"/>
   <testcase name="givenParkingLotWithSizeOne_whenCheckIsAvailable_ThenShouldNotBeAvailable()" classname="com.parkinglot.ParkingLotTest" time="0.001"/>
-  <testcase name="givenParkingLotWithCapacityTwo_whenUnParkNotAvailableVehicle_thenShouldThrowException()" classname="com.parkinglot.ParkingLotTest" time="0.001"/>
+  <testcase name="givenParkingLotWithCapacityTwo_whenUnParkNotAvailableVehicle_thenShouldThrowException()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
+  <testcase name="givenParkingLotWithCapacityOneAndOwner_WhenParkingLotIsFull_ThenShouldSendNotification()" classname="com.parkinglot.ParkingLotTest" time="0.001"/>
   <testcase name="givenParkingLotWithCapacityTwo_whenParkSameTwoVehicles_thenShouldNotBePark()" classname="com.parkinglot.ParkingLotTest" time="0.001"/>
-  <testcase name="givenParkingLotWithCapacityTwo_whenUnParkOneVehicle_thenShouldReturnVehicle()" classname="com.parkinglot.ParkingLotTest" time="0.001"/>
-  <testcase name="givenParkingLotWithCapacityTwo_whenUnParkThreeVehicle_thenShouldThrowException()" classname="com.parkinglot.ParkingLotTest" time="0.001"/>
+  <testcase name="givenParkingLotWithCapacityTwo_whenUnParkOneVehicle_thenShouldReturnVehicle()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
+  <testcase name="givenParkingLotWithCapacityTwo_whenUnParkThreeVehicle_thenShouldThrowException()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
