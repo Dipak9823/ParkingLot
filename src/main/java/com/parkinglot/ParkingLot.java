@@ -10,7 +10,7 @@ import java.util.List;
 public class ParkingLot {
     private final int size;
     private final List<Object> vehicles;
-    private final Owner owner;
+    private final Subscribe owner;
     private String message = "Parking Lot is Parking";
 
     public ParkingLot(int size) {
@@ -19,7 +19,7 @@ public class ParkingLot {
         owner = null;
     }
 
-    public ParkingLot(int size, Owner owner) {
+    public ParkingLot(int size, Subscribe owner) {
         this.size = size;
         this.owner = owner;
         this.vehicles = new ArrayList<>();

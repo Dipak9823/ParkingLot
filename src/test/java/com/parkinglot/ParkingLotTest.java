@@ -7,21 +7,20 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DummyOwner extends Owner {
-    public boolean isParkingLotFull = false;
-    public boolean isAvailable = false;
-    public int noOfTimes = 0;
+class DummyOwner implements Subscribe {
+
+    public int timesIsFull = 0;
+    public int timesIsAvailable = 0;
+
 
     @Override
     public void informIsFull() {
-        this.isParkingLotFull = true;
-        noOfTimes++;
+        timesIsFull++;
     }
 
     @Override
     public void informSpaceAvailable() {
-        this.isAvailable = true;
-        noOfTimes++;
+        timesIsAvailable++;
     }
 }
 
@@ -117,11 +116,13 @@ public class ParkingLotTest {
     @Test
     void givenParkingLotWithCapacityOne_WhenIsFull_ThenNotifyToOwner() throws VehicleAlreadyPark, CapacityFullException {
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(1, owner);
+        ParkingLot parkingLot = new ParkingLot(2, owner);
         Object vehicleOne = new Object();
+        Object vehicleTwo = new Object();
         parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
 
-        assertTrue(owner.isParkingLotFull);
+        assertEquals(owner.timesIsFull,1);
     }
 
     @Test
@@ -131,7 +132,7 @@ public class ParkingLotTest {
         Object vehicleOne = new Object();
         parkingLot.park(vehicleOne);
 
-        assertEquals(owner.noOfTimes, 1);
+        assertEquals(owner.timesIsFull, 1);
     }
 
     @Test
@@ -145,6 +146,18 @@ public class ParkingLotTest {
 
         parkingLot.unPark(vehicleTwo);
 
-        assertTrue(owner.isAvailable);
+        assertEquals(owner.timesIsAvailable,1);
+    }
+
+    @Test
+    void givenParkingLotWithCapacityOne_WhenCalls_ThenShouldReturnsOne() throws VehicleAlreadyPark, CapacityFullException, CarNotFoundException {
+        DummyOwner owner = new DummyOwner();
+        ParkingLot parkingLot = new ParkingLot(1, owner);
+        Object vehicleOne = new Object();
+        parkingLot.park(vehicleOne);
+
+        parkingLot.unPark(vehicleOne);
+
+        assertEquals(owner.timesIsAvailable, 1);
     }
 }
