@@ -3,18 +3,19 @@ package com.parkinglot;
 import com.parkinglot.exception.CapacityFullException;
 import com.parkinglot.exception.CarNotFoundException;
 import com.parkinglot.exception.VehicleAlreadyPark;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DummyOwner extends Owner {
-    public boolean wasCalled=false;
+    public boolean wasCalled = false;
+    public int noOfTimes = 0;
 
     @Override
     public void inform() {
-       // super.inform();
-        this.wasCalled=true;
+        // super.inform();
+        this.wasCalled = true;
+        noOfTimes++;
     }
 }
 
@@ -24,7 +25,7 @@ public class ParkingLotTest {
     void givenParkingLot_whenIsAvailable_ThenShouldBeAvailable() throws CapacityFullException, VehicleAlreadyPark {
         ParkingLot parkingLot = new ParkingLot(1);
 
-        assertDoesNotThrow(()->parkingLot.park(new Object()));
+        assertDoesNotThrow(() -> parkingLot.park(new Object()));
     }
 
     @Test
@@ -109,13 +110,21 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotWithCapacityOne_WhenIsFull_ThenNotifyToOwner() throws VehicleAlreadyPark, CapacityFullException {
-        DummyOwner owner=new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(1,owner);
+        DummyOwner owner = new DummyOwner();
+        ParkingLot parkingLot = new ParkingLot(1, owner);
         Object vehicleOne = new Object();
         parkingLot.park(vehicleOne);
 
         assertTrue(owner.wasCalled);
     }
 
+    @Test
+    void givenParkingLotWithCapacityOne_WhenCheckHowManyTimesCall_ThenShouldReturnsNoOfTimesMethodCall() throws VehicleAlreadyPark, CapacityFullException {
+        DummyOwner owner = new DummyOwner();
+        ParkingLot parkingLot = new ParkingLot(1, owner);
+        Object vehicleOne = new Object();
+        parkingLot.park(vehicleOne);
 
+        assertEquals(owner.noOfTimes,1);
+    }
 }
