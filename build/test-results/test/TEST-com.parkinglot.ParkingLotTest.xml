@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.parkinglot.ParkingLotTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2019-10-05T05:09:48" hostname="Dipaks-MacBook-Pro.local" time="0.018">
+  <properties/>
+  <testcase name="givenParkingLotWithCapacityOne_whenUnParkVehicle_thenShouldReturnVehicle()" classname="com.parkinglot.ParkingLotTest" time="0.007"/>
+  <testcase name="givenParkingLotWithCapacityTwo_whenUnParkVehicle_thenShouldThrowException()" classname="com.parkinglot.ParkingLotTest" time="0.001"/>
+  <testcase name="givenParkingLot_whenIsAvailable_ThenShouldBeAvailable()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
+  <testcase name="givenFullParkingLot_WhenUnPark_ThenNotifyToOwner()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
+  <testcase name="givenParkingLotWithCapacityOne_WhenCheckHowManyTimesCall_ThenShouldReturnsOne()" classname="com.parkinglot.ParkingLotTest" time="0.001"/>
+  <testcase name="givenParkingLotWithCapacityTwo_WhenFull_ThenShouldNotifyToSecurityGuard()" classname="com.parkinglot.ParkingLotTest" time="0.001"/>
+  <testcase name="givenParkingLotWithCapacityOne_WhenUnPark_ThenShouldNotifyToOwner()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
+  <testcase name="givenParkingLotWithSizeOne_whenCheckIsAvailable_ThenShouldNotBeAvailable()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
+  <testcase name="givenParkingLotWithCapacityOne_WhenIsFull_ThenNotifyToOwner()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
+  <testcase name="givenFullParkingLot_WhenUnPark_ThenShouldNotifyToSecurityGuard()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
+  <testcase name="givenParkingLotWithCapacityTwo_whenUnParkNotAvailableVehicle_thenShouldThrowException()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
+  <testcase name="givenParkingLotWithCapacityTwo_whenParkSameTwoVehicles_thenShouldNotBePark()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
+  <testcase name="givenParkingLotWithCapacityTwo_whenUnParkOneVehicle_thenShouldReturnVehicle()" classname="com.parkinglot.ParkingLotTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

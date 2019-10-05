@@ -187,4 +187,18 @@ public class ParkingLotTest {
 
         assertEquals(securityGuard.timesIsFull,1);
     }
+
+    @Test
+    void givenFullParkingLot_WhenUnPark_ThenShouldNotifyToSecurityGuard() throws VehicleAlreadyPark, CapacityFullException, CarNotFoundException {
+        SecurityGuard securityGuard =new SecurityGuard();
+        ParkingLot parkingLot=new ParkingLot(2,securityGuard);
+        Object vehicleOne=new Object();
+        Object vehicleTwo=new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+
+        parkingLot.unPark(vehicleTwo);
+
+        assertEquals(securityGuard.timesIsAvailable,1);
+    }
 }
