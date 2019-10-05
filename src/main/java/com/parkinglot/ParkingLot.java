@@ -12,21 +12,15 @@ public class ParkingLot {
     private final List<Object> vehicles;
     private List<Observer> observer;
 
-    public ParkingLot(int size) {
+    public ParkingLot(int size,List<Observer> observer) {
         this.size = size;
         this.vehicles = new ArrayList<>();
-        observer = new ArrayList<>();
-    }
-
-    public ParkingLot(int size, List<Observer> observer) {
-        this.size = size;
         this.observer = observer;
-        this.vehicles = new ArrayList<>();
     }
 
     public void park(Object vehicle) throws CapacityFullException, VehicleAlreadyPark {
         if (!isSpaceAvailable()) {
-            throw new CapacityFullException(); // TODO - error message not needed.
+            throw new CapacityFullException();
         }
 
         if (isAlreadyParked(vehicle)) {
@@ -34,8 +28,8 @@ public class ParkingLot {
         }
 
         vehicles.add(vehicle);
-        if (isFull(size) && observer != null) { // TODO - should not have any null check.
-            for (Observer observer : observer) { // TODO - name loops.
+        if (isFull(size) && observer != null) {
+            for (Observer observer : observer) {
                 observer.informIsFull();
             }
         }
