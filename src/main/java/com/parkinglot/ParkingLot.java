@@ -10,8 +10,7 @@ import java.util.List;
 public class ParkingLot {
     private final int size;
     private final List<Object> vehicles;
-    private final Observer observer;
-    private String message = "Parking Lot is Parking";
+    private List<Observer> observer =new ArrayList<>();
 
     public ParkingLot(int size) {
         this.size = size;
@@ -19,7 +18,7 @@ public class ParkingLot {
         observer = null;
     }
 
-    public ParkingLot(int size, Observer observer) {
+    public ParkingLot(int size, List<Observer> observer) {
         this.size = size;
         this.observer = observer;
         this.vehicles = new ArrayList<>();
@@ -36,7 +35,9 @@ public class ParkingLot {
 
         vehicles.add(vehicle);
         if (isFull(size) && observer != null) {
-            observer.informIsFull();
+            for (Observer observer : observer) {
+                observer.informIsFull();
+            }
         }
     }
 
@@ -53,7 +54,9 @@ public class ParkingLot {
         }
         vehicles.remove(vehicle);
         if (observer != null) {
-            observer.informSpaceAvailable();
+            for (Observer observer : observer) {
+                observer.informSpaceAvailable();
+            }
         }
         return vehicle;
     }

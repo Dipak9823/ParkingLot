@@ -5,6 +5,9 @@ import com.parkinglot.exception.CarNotFoundException;
 import com.parkinglot.exception.VehicleAlreadyPark;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DummyOwner implements Observer {
@@ -41,6 +44,7 @@ class SecurityGuard implements Observer{
 
 public class ParkingLotTest {
 
+    List<Observer> observers=new ArrayList<>();
     @Test
     void givenParkingLot_whenIsAvailable_ThenShouldBeAvailable() throws CapacityFullException, VehicleAlreadyPark {
         ParkingLot parkingLot = new ParkingLot(1);
@@ -131,7 +135,8 @@ public class ParkingLotTest {
     @Test
     void givenParkingLotWithCapacityOne_WhenIsFull_ThenNotifyToOwner() throws VehicleAlreadyPark, CapacityFullException {
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        observers.add(owner);
+        ParkingLot parkingLot = new ParkingLot(2, observers);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
         parkingLot.park(vehicleOne);
@@ -143,7 +148,8 @@ public class ParkingLotTest {
     @Test
     void givenParkingLotWithCapacityOne_WhenCheckHowManyTimesCall_ThenShouldReturnsOne() throws VehicleAlreadyPark, CapacityFullException {
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(1, owner);
+        observers.add(owner);
+        ParkingLot parkingLot = new ParkingLot(1, observers);
         Object vehicleOne = new Object();
         parkingLot.park(vehicleOne);
 
@@ -153,7 +159,8 @@ public class ParkingLotTest {
     @Test
     void givenFullParkingLot_WhenUnPark_ThenNotifyToOwner() throws VehicleAlreadyPark, CapacityFullException, CarNotFoundException {
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(2, owner);
+        observers.add(owner);
+        ParkingLot parkingLot = new ParkingLot(2, observers);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
         parkingLot.park(vehicleOne);
@@ -167,10 +174,11 @@ public class ParkingLotTest {
     @Test
     void givenParkingLotWithCapacityOne_WhenUnPark_ThenShouldNotifyToOwner() throws VehicleAlreadyPark, CapacityFullException, CarNotFoundException {
         DummyOwner owner = new DummyOwner();
-        ParkingLot parkingLot = new ParkingLot(1, owner);
+        observers.add(owner);
+        ParkingLot parkingLot = new ParkingLot(1, observers);
+
         Object vehicleOne = new Object();
         parkingLot.park(vehicleOne);
-
         parkingLot.unPark(vehicleOne);
 
         assertEquals(owner.timesIsAvailable, 1);
@@ -179,7 +187,9 @@ public class ParkingLotTest {
     @Test
     void givenParkingLotWithCapacityTwo_WhenFull_ThenShouldNotifyToSecurityGuard() throws VehicleAlreadyPark, CapacityFullException{
         SecurityGuard securityGuard =new SecurityGuard();
-        ParkingLot parkingLot=new ParkingLot(2,securityGuard);
+        observers.add(securityGuard);
+        ParkingLot parkingLot=new ParkingLot(2, observers);
+
         Object vehicleOne=new Object();
         Object vehicleTwo=new Object();
         parkingLot.park(vehicleOne);
@@ -189,9 +199,11 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenFullParkingLot_WhenUnPark_ThenShouldNotifyToSecurityGuard() throws VehicleAlreadyPark, CapacityFullException, CarNotFoundException {
+    void givenFullParkingLot_WhenUnPark_ThenShouldNotifyToSecurityGuard() throws Exception {
         SecurityGuard securityGuard =new SecurityGuard();
-        ParkingLot parkingLot=new ParkingLot(2,securityGuard);
+        observers.add(securityGuard);
+        ParkingLot parkingLot=new ParkingLot(2, observers);
+
         Object vehicleOne=new Object();
         Object vehicleTwo=new Object();
         parkingLot.park(vehicleOne);
@@ -200,5 +212,22 @@ public class ParkingLotTest {
         parkingLot.unPark(vehicleTwo);
 
         assertEquals(securityGuard.timesIsAvailable,1);
+    }
+
+    @Test
+    void givenParkingLotWithCapacityTwo_WhenFull_ThenShouldNotifyToSecurityGuardAndOwner() throws Exception {
+        SecurityGuard securityGuard =new SecurityGuard();
+        DummyOwner owner=new DummyOwner();
+        observers.add(securityGuard);
+        observers.add(owner);
+        ParkingLot parkingLot=new ParkingLot(2, observers);
+
+        Object vehicleOne=new Object();
+        Object vehicleTwo=new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+
+        assertEquals(securityGuard.timesIsFull,1);
+        assertEquals(owner.timesIsFull,1);
     }
 }
