@@ -12,7 +12,7 @@ public class ParkingLot {
     private final List<Object> vehicles;
     private List<Observer> observer;
 
-    public ParkingLot(int size,List<Observer> observer) {
+    public ParkingLot(int size, List<Observer> observer) {
         this.size = size;
         this.vehicles = new ArrayList<>();
         this.observer = observer;
@@ -29,14 +29,8 @@ public class ParkingLot {
 
         vehicles.add(vehicle);
         if (isFull(size) && observer != null) {
-            for (Observer observer : observer) {
-                observer.informIsFull();
-            }
+            informObservers();
         }
-    }
-
-    private boolean isFull(int size) {
-        return vehicles.size() == size;
     }
 
     public Object unPark(Object vehicle) throws CarNotFoundException {
@@ -48,12 +42,11 @@ public class ParkingLot {
         }
         vehicles.remove(vehicle);
         if (observer != null) {
-            for (Observer observer : observer) {
-                observer.informSpaceAvailable();
-            }
+            informObservers();
         }
         return vehicle;
     }
+
 
     private boolean isAlreadyParked(Object vehicle) {
         return vehicles.contains(vehicle);
@@ -63,4 +56,13 @@ public class ParkingLot {
         return vehicles.size() < size;
     }
 
+    private boolean isFull(int size) {
+        return vehicles.size() == size;
+    }
+
+    private void informObservers() {
+        for (Observer observer : observer) {
+            observer.informSpaceAvailable();
+        }
+    }
 }
