@@ -284,4 +284,41 @@ public class ParkingLotTest {
         assertEquals(owner.timesIsAvailable,1);
         assertEquals(securityGuard.timesIsAvailable,1);
     }
+
+    @Test
+    void givenParkingLot_WhenRemoveSecurityGuardAndParkingLotIsFull_ThenShouldNotBeNotifyToSecurityGuard() throws Exception {
+        DummyOwner owner=new DummyOwner();
+        SecurityGuard securityGuard=new SecurityGuard();
+        observers.add(owner);
+        observers.add(securityGuard);
+        ParkingLot parkingLot=new ParkingLot(1,observers);
+
+
+        parkingLot.removeObserver(securityGuard);
+        Object vehicle=new Object();
+        parkingLot.park(vehicle);
+
+        assertEquals(owner.timesIsFull,1);
+        assertNotEquals(securityGuard.timesIsFull,1);
+    }
+
+    @Test
+    void givenFullParkingLot_WhenRemoveSecurityGuardAndUnPark_ThenShouldNotBeNotifyToSecurityGuard() throws Exception {
+        SecurityGuard securityGuard=new SecurityGuard();
+        DummyOwner owner=new DummyOwner();
+        observers.add(owner);
+        observers.add(securityGuard);
+        ParkingLot parkingLot=new ParkingLot(1,observers);
+
+        parkingLot.removeObserver(securityGuard);
+        Object vehicle=new Object();
+        parkingLot.park(vehicle);
+        parkingLot.unPark(vehicle);
+
+        assertEquals(owner.timesIsFull,1);
+        assertEquals(owner.timesIsAvailable,1);
+
+        assertNotEquals(securityGuard.timesIsFull,1);
+        assertNotEquals(securityGuard.timesIsAvailable,1);
+    }
 }
