@@ -1,6 +1,6 @@
 package com.parkinglot;
 
-public interface Observer {
+public interface Subscribers {
 
     void informIsFull();
 

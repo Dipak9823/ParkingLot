@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DummyOwner implements Observer {
+class DummyOwner implements Subscribers {
 
     public int timesIsFull = 0;
     public int timesIsAvailable = 0;
@@ -28,7 +28,7 @@ class DummyOwner implements Observer {
     }
 }
 
-class SecurityGuard implements Observer {
+class SecurityGuard implements Subscribers {
 
     public int timesIsFull = 0;
     public int timesIsAvailable = 0;
@@ -46,23 +46,23 @@ class SecurityGuard implements Observer {
 
 public class ParkingLotTest {
 
-    List<Observer> observers ;
+    List<Subscribers> subscribers;
 
     @BeforeEach
     void setUp() {
-        observers = new ArrayList<>();
+        subscribers = new ArrayList<>();
     }
 
     @Test
     void givenParkingLot_whenIsAvailable_ThenShouldBeAvailable() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(1,observers);
+        ParkingLot parkingLot = new ParkingLot(1, subscribers);
 
         assertDoesNotThrow(() -> parkingLot.park(new Object()));
     }
 
     @Test
     void givenParkingLotWithSizeOne_whenCheckIsAvailable_ThenShouldNotBeAvailable() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(1,observers);
+        ParkingLot parkingLot = new ParkingLot(1, subscribers);
         Object vehicle1 = new Object();
         Object vehicle2 = new Object();
         parkingLot.park(vehicle1);
@@ -73,7 +73,7 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotWithCapacityTwo_whenParkSameTwoVehicles_thenShouldNotBePark() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(2,observers);
+        ParkingLot parkingLot = new ParkingLot(2, subscribers);
         Object vehicle = new Object();
 
         parkingLot.park(vehicle);
@@ -84,7 +84,7 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotWithCapacityOne_whenUnParkVehicle_thenShouldReturnVehicle() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(1,observers);
+        ParkingLot parkingLot = new ParkingLot(1, subscribers);
         Object vehicle = new Object();
 
         parkingLot.park(vehicle);
@@ -93,7 +93,7 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotWithCapacityTwo_whenUnParkOneVehicle_thenShouldReturnVehicle() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(2,observers);
+        ParkingLot parkingLot = new ParkingLot(2, subscribers);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
         parkingLot.park(vehicleOne);
@@ -104,7 +104,7 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotWithCapacityTwo_whenUnParkNotAvailableVehicle_thenShouldThrowException() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(2,observers);
+        ParkingLot parkingLot = new ParkingLot(2, subscribers);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
         parkingLot.park(vehicleOne);
@@ -121,7 +121,7 @@ public class ParkingLotTest {
 
     @Test
     void givenParkingLotWithCapacityTwo_whenUnParkVehicle_thenShouldThrowException() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(2,observers);
+        ParkingLot parkingLot = new ParkingLot(2, subscribers);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
         parkingLot.park(vehicleOne);
@@ -139,8 +139,8 @@ public class ParkingLotTest {
     @Test
     void givenParkingLotWithCapacityOne_WhenIsFull_ThenNotifyToOwner() throws Exception {
         DummyOwner owner = new DummyOwner();
-        observers.add(owner);
-        ParkingLot parkingLot = new ParkingLot(2, observers);
+        subscribers.add(owner);
+        ParkingLot parkingLot = new ParkingLot(2, subscribers);
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
         parkingLot.park(vehicleOne);
@@ -152,8 +152,8 @@ public class ParkingLotTest {
     @Test
     void givenParkingLotWithCapacityOne_WhenCheckHowManyTimesCall_ThenShouldReturnsOne() throws Exception {
         DummyOwner owner = new DummyOwner();
-        observers.add(owner);
-        ParkingLot parkingLot = new ParkingLot(1, observers);
+        subscribers.add(owner);
+        ParkingLot parkingLot = new ParkingLot(1, subscribers);
         Object vehicleOne = new Object();
         parkingLot.park(vehicleOne);
 
@@ -162,7 +162,7 @@ public class ParkingLotTest {
 
     @Test
     void givenFullParkingLot_WhenUnPark_ThenNotifyToOwner() throws Exception {
-        List<Observer> observers = new ArrayList<>();
+        List<Subscribers> observers = new ArrayList<>();
         DummyOwner owner = new DummyOwner();
         observers.add(owner);
         ParkingLot parkingLot = new ParkingLot(2, observers);
@@ -179,8 +179,8 @@ public class ParkingLotTest {
     @Test
     void givenParkingLotWithCapacityOne_WhenUnPark_ThenShouldNotifyToOwner() throws Exception {
         DummyOwner owner = new DummyOwner();
-        observers.add(owner);
-        ParkingLot parkingLot = new ParkingLot(1, observers);
+        subscribers.add(owner);
+        ParkingLot parkingLot = new ParkingLot(1, subscribers);
 
         Object vehicleOne = new Object();
         parkingLot.park(vehicleOne);
@@ -192,8 +192,8 @@ public class ParkingLotTest {
     @Test
     void givenParkingLotWithCapacityTwo_WhenFull_ThenShouldNotifyToSecurityGuard() throws Exception {
         SecurityGuard securityGuard = new SecurityGuard();
-        observers.add(securityGuard);
-        ParkingLot parkingLot = new ParkingLot(2, observers);
+        subscribers.add(securityGuard);
+        ParkingLot parkingLot = new ParkingLot(2, subscribers);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -206,8 +206,8 @@ public class ParkingLotTest {
     @Test
     void givenFullParkingLot_WhenUnPark_ThenShouldNotifyToSecurityGuard() throws Exception {
         SecurityGuard securityGuard = new SecurityGuard();
-        observers.add(securityGuard);
-        ParkingLot parkingLot = new ParkingLot(2, observers);
+        subscribers.add(securityGuard);
+        ParkingLot parkingLot = new ParkingLot(2, subscribers);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -223,9 +223,9 @@ public class ParkingLotTest {
     void givenParkingLotWithCapacityTwo_WhenFull_ThenShouldNotifyToSecurityGuardAndOwner() throws Exception {
         SecurityGuard securityGuard = new SecurityGuard();
         DummyOwner owner = new DummyOwner();
-        observers.add(securityGuard);
-        observers.add(owner);
-        ParkingLot parkingLot = new ParkingLot(2, observers);
+        subscribers.add(securityGuard);
+        subscribers.add(owner);
+        ParkingLot parkingLot = new ParkingLot(2, subscribers);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -240,9 +240,9 @@ public class ParkingLotTest {
     void givenFullParkingLot_WhenUnPark_ThenShouldNotifyToSecurityGuardAndOwner() throws Exception {
         SecurityGuard securityGuard = new SecurityGuard();
         DummyOwner owner = new DummyOwner();
-        observers.add(securityGuard);
-        observers.add(owner);
-        ParkingLot parkingLot = new ParkingLot(2, observers);
+        subscribers.add(securityGuard);
+        subscribers.add(owner);
+        ParkingLot parkingLot = new ParkingLot(2, subscribers);
 
         Object vehicleOne = new Object();
         Object vehicleTwo = new Object();
@@ -257,8 +257,8 @@ public class ParkingLotTest {
     @Test
     void givenParkingLot_WhenAddingObserverAfterCreationOfParkingLotAndParkIsFull_ThenShouldNotifyToAllObservers() throws Exception {
         DummyOwner owner=new DummyOwner();
-        observers.add(owner);
-        ParkingLot parkingLot=new ParkingLot(1,observers);
+        subscribers.add(owner);
+        ParkingLot parkingLot=new ParkingLot(1, subscribers);
 
         SecurityGuard securityGuard=new SecurityGuard();
         parkingLot.addObserver(securityGuard);
@@ -272,8 +272,8 @@ public class ParkingLotTest {
     @Test
     void givenFullParkingLot_WhenAddingObserverAfterCreationOfParkingLotAndUnPark_ThenShouldNotifyToAllObservers() throws Exception {
         DummyOwner owner=new DummyOwner();
-        observers.add(owner);
-        ParkingLot parkingLot=new ParkingLot(1,observers);
+        subscribers.add(owner);
+        ParkingLot parkingLot=new ParkingLot(1, subscribers);
 
         SecurityGuard securityGuard=new SecurityGuard();
         parkingLot.addObserver(securityGuard);
@@ -289,9 +289,9 @@ public class ParkingLotTest {
     void givenParkingLot_WhenRemoveSecurityGuardAndParkingLotIsFull_ThenShouldNotBeNotifyToSecurityGuard() throws Exception {
         DummyOwner owner=new DummyOwner();
         SecurityGuard securityGuard=new SecurityGuard();
-        observers.add(owner);
-        observers.add(securityGuard);
-        ParkingLot parkingLot=new ParkingLot(1,observers);
+        subscribers.add(owner);
+        subscribers.add(securityGuard);
+        ParkingLot parkingLot=new ParkingLot(1, subscribers);
 
 
         parkingLot.removeObserver(securityGuard);
@@ -306,9 +306,9 @@ public class ParkingLotTest {
     void givenFullParkingLot_WhenRemoveSecurityGuardAndUnPark_ThenShouldNotBeNotifyToSecurityGuard() throws Exception {
         SecurityGuard securityGuard=new SecurityGuard();
         DummyOwner owner=new DummyOwner();
-        observers.add(owner);
-        observers.add(securityGuard);
-        ParkingLot parkingLot=new ParkingLot(1,observers);
+        subscribers.add(owner);
+        subscribers.add(securityGuard);
+        ParkingLot parkingLot=new ParkingLot(1, subscribers);
 
         parkingLot.removeObserver(securityGuard);
         Object vehicle=new Object();
