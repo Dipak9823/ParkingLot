@@ -12,6 +12,7 @@
       <change beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/com.parkinglot.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/packages/com.parkinglot.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-com.parkinglot.ParkingLotTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-com.parkinglot.ParkingLotTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/parkinglot/Observer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parkinglot/Observer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/parkinglot/ParkingLot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/parkinglot/ParkingLot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/parkinglot/ParkingLotTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/parkinglot/ParkingLotTest.java" afterDir="false" />
     </list>
