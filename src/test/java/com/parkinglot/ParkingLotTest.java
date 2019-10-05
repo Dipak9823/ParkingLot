@@ -268,4 +268,20 @@ public class ParkingLotTest {
         assertEquals(owner.timesIsFull,1);
         assertEquals(securityGuard.timesIsFull,1);
     }
+
+    @Test
+    void givenFullParkingLot_WhenAddingObserverAfterCreationOfParkingLotAndUnPark_ThenShouldNotifyToAllObservers() throws Exception {
+        DummyOwner owner=new DummyOwner();
+        observers.add(owner);
+        ParkingLot parkingLot=new ParkingLot(1,observers);
+
+        SecurityGuard securityGuard=new SecurityGuard();
+        parkingLot.addObserver(securityGuard);
+        Object vehicle=new Object();
+        parkingLot.park(vehicle);
+        parkingLot.unPark(vehicle);
+
+        assertEquals(owner.timesIsAvailable,1);
+        assertEquals(securityGuard.timesIsAvailable,1);
+    }
 }
