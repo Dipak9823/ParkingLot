@@ -10,12 +10,12 @@ import java.util.List;
 public class ParkingLot {
     private final int size;
     private final List<Object> vehicles;
-    private List<Observer> observer;
+    private List<Observer> observers;
 
-    public ParkingLot(int size, List<Observer> observer) {
+    public ParkingLot(int size, List<Observer> observers) {
         this.size = size;
         this.vehicles = new ArrayList<>();
-        this.observer = observer;
+        this.observers = observers;
     }
 
     public void park(Object vehicle) throws CapacityFullException, VehicleAlreadyPark {
@@ -28,8 +28,10 @@ public class ParkingLot {
         }
 
         vehicles.add(vehicle);
-        if (isFull(size) && observer != null) {
-            informObservers();
+        if (isFull(size) && observers != null) {
+            for (Observer observer : observers) {
+                observer.informIsFull();
+            }
         }
     }
 
@@ -41,8 +43,10 @@ public class ParkingLot {
             throw new CarNotFoundException();
         }
         vehicles.remove(vehicle);
-        if (observer != null) {
-            informObservers();
+        if (observers != null) {
+            for (Observer observer : observers) {
+                observer.informSpaceAvailable();
+            }
         }
         return vehicle;
     }
@@ -60,9 +64,7 @@ public class ParkingLot {
         return vehicles.size() == size;
     }
 
-    private void informObservers() {
-        for (Observer observer : observer) {
-            observer.informSpaceAvailable();
-        }
+    public void addObserver(Observer observer) {
+        observers.add(observer);
     }
 }
