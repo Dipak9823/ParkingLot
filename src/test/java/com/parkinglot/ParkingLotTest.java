@@ -7,12 +7,27 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DummyOwner implements Subscribe {
+class DummyOwner implements Observer {
 
     public int timesIsFull = 0;
     public int timesIsAvailable = 0;
 
 
+    @Override
+    public void informIsFull() {
+        timesIsFull++;
+    }
+
+    @Override
+    public void informSpaceAvailable() {
+        timesIsAvailable++;
+    }
+}
+
+class SecurityGuard implements Observer{
+
+    public int timesIsFull = 0;
+    public int timesIsAvailable = 0;
     @Override
     public void informIsFull() {
         timesIsFull++;
@@ -150,7 +165,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenParkingLotWithCapacityOne_WhenCalls_ThenShouldReturnsOne() throws VehicleAlreadyPark, CapacityFullException, CarNotFoundException {
+    void givenParkingLotWithCapacityOne_WhenUnPark_ThenShouldNotifyToOwner() throws VehicleAlreadyPark, CapacityFullException, CarNotFoundException {
         DummyOwner owner = new DummyOwner();
         ParkingLot parkingLot = new ParkingLot(1, owner);
         Object vehicleOne = new Object();
@@ -159,5 +174,17 @@ public class ParkingLotTest {
         parkingLot.unPark(vehicleOne);
 
         assertEquals(owner.timesIsAvailable, 1);
+    }
+
+    @Test
+    void givenParkingLotWithCapacityTwo_WhenFull_ThenShouldNotifyToSecurityGuard() throws VehicleAlreadyPark, CapacityFullException{
+        SecurityGuard securityGuard =new SecurityGuard();
+        ParkingLot parkingLot=new ParkingLot(2,securityGuard);
+        Object vehicleOne=new Object();
+        Object vehicleTwo=new Object();
+        parkingLot.park(vehicleOne);
+        parkingLot.park(vehicleTwo);
+
+        assertEquals(securityGuard.timesIsFull,1);
     }
 }

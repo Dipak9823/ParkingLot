@@ -10,18 +10,18 @@ import java.util.List;
 public class ParkingLot {
     private final int size;
     private final List<Object> vehicles;
-    private final Subscribe owner;
+    private final Observer observer;
     private String message = "Parking Lot is Parking";
 
     public ParkingLot(int size) {
         this.size = size;
         this.vehicles = new ArrayList<>();
-        owner = null;
+        observer = null;
     }
 
-    public ParkingLot(int size, Subscribe owner) {
+    public ParkingLot(int size, Observer observer) {
         this.size = size;
-        this.owner = owner;
+        this.observer = observer;
         this.vehicles = new ArrayList<>();
     }
 
@@ -35,8 +35,8 @@ public class ParkingLot {
         }
 
         vehicles.add(vehicle);
-        if (isFull(size) && owner != null) {
-            owner.informIsFull();
+        if (isFull(size) && observer != null) {
+            observer.informIsFull();
         }
     }
 
@@ -52,8 +52,8 @@ public class ParkingLot {
             throw new CarNotFoundException("VEHICLE NO LONGER AVAILABLE IN PARKING LOT");
         }
         vehicles.remove(vehicle);
-        if (owner != null) {
-            owner.informSpaceAvailable();
+        if (observer != null) {
+            observer.informSpaceAvailable();
         }
         return vehicle;
     }
